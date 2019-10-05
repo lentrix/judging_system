@@ -20,4 +20,13 @@ class Contest extends Model
         $count = \App\Round::where('contest_id', $this->id)->count();
         return ++$count;
     }
+
+    public function getNextJudgeNumberAttribute() {
+        $count = \App\ContestJudge::where('contest_id', $this->id)->count();
+        return ++$count;
+    }
+
+    public function contestJudges() {
+        return $this->hasMany('App\ContestJudge')->orderBy('order');
+    }
 }

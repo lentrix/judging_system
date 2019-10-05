@@ -33,5 +33,11 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::delete('/criteria/{criteria}', 'CriteriaController@delete');
     Route::get('/criteria/{criteria}/up', 'CriteriaController@moveUp');
     Route::get('/criteria/{criteria}/down', 'CriteriaController@moveDown');
+
+    Route::post('/judge', 'JudgeController@store');
+    Route::patch('/judge', 'JudgeController@addExisting');
+    Route::delete('/judge/{contestJudge}', 'JudgeController@delete');
+    Route::get('/judge/{contestJudge}/up', 'JudgeController@moveUp');
+    Route::get('/judge/{contestJudge}/down', 'JudgeController@moveDown');
 });
 

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'password','role'
     ];
 
     /**
@@ -39,5 +39,18 @@ class User extends Authenticatable
 
     public function contests() {
         return $this->hasMany('App\Contest');
+    }
+
+    public function contestJudges() {
+        return $this->hasMany('App\ContestJudge');
+    }
+
+    public static function list() {
+        $users = static::orderBy('name')->get();
+        $data = [];
+        foreach($users as $user) {
+            $data[$user->id] = $user['name'];
+        }
+        return $data;
     }
 }
