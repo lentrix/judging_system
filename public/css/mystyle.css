@@ -1,0 +1,29 @@
+/* Custom Styling */
+
+@font-face {
+    font-family: 'comfortaa';
+    src: url('../fonts/Comfortaa-Light.ttf');
+}
+
+@font-face {
+    font-family: 'poiret';
+    src: url('../fonts/PoiretOne-Regular.ttf');
+}
+
+* {
+    font-family: 'comfortaa'
+}
+
+h1, h2, h3 {
+    font-family: 'poiret';
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.small-italic {
+    font-size: 0.8em;
+    font-style: italic;
+    color: rgb(68, 117, 136);
+}
