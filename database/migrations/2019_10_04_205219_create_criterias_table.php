@@ -18,6 +18,7 @@ class CreateCriteriasTable extends Migration
             $table->string('criteria');
             $table->string('description')->nullable();
             $table->integer('max');
+            $table->integer('order');
             $table->timestamps();
             $table->bigInteger('round_id')->unsigned();
             $table->foreign('round_id')->references('id')->on('rounds');

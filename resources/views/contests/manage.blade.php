@@ -39,15 +39,6 @@
 
     <div class="col">
         <div class="card">
-            <div class="card-header"><h3>Contestants</h3></div>
-            <div class="card-body">
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card">
             <div class="card-header"><h3>Judges</h3></div>
             <div class="card-body">
 

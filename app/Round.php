@@ -19,4 +19,13 @@ class Round extends Model
     public function getPreviousRoundAttribute() {
         return static::where('round_order', $this->round_order - 1)->first();
     }
+
+    public function getNextCriteriaNumberAttribute() {
+        $count = \App\Criteria::where('round_id', $this->id)->count();
+        return ++$count;
+    }
+
+    public function criterias() {
+        return $this->hasMany('App\Criteria')->orderBy('order');
+    }
 }

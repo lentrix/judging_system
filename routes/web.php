@@ -20,11 +20,18 @@ Route::group(['middleware'=>['auth']], function() {
 
 Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/contest/create', 'ContestController@create');
+
     Route::post('/contest', 'ContestController@store');
     Route::get('/contest/{contest}', 'ContestController@manage');
     Route::post('/round', 'RoundController@store');
+
     Route::get('/round/{round}', 'RoundController@manage');
     Route::get('/round/{round}/up', 'RoundController@moveUp');
     Route::get('/round/{round}/down', 'RoundController@moveDown');
+
+    Route::post('/criteria', 'CriteriaController@store');
+    Route::delete('/criteria/{criteria}', 'CriteriaController@delete');
+    Route::get('/criteria/{criteria}/up', 'CriteriaController@moveUp');
+    Route::get('/criteria/{criteria}/down', 'CriteriaController@moveDown');
 });
 

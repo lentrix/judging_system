@@ -18,9 +18,10 @@ class CreateContestantsTable extends Migration
             $table->string('name');
             $table->string('details')->nullable();
             $table->string('remarks')->nullable();
+            $table->integer('order');
             $table->timestamps();
-            $table->bigInteger('contest_id')->unsigned();
-            $table->foreign('contest_id')->references('id')->on('contests');
+            $table->bigInteger('round_id')->unsigned();
+            $table->foreign('round_id')->references('id')->on('rounds');
         });
     }
 
