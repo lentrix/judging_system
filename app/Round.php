@@ -12,6 +12,10 @@ class Round extends Model
         return $this->belongsTo('App\Contest');
     }
 
+    public function contestants() {
+        return $this->hasMany('App\Contestant')->orderBy('order');
+    }
+
     public function getNextRoundAttribute() {
         return static::where('round_order', $this->round_order + 1)->first();
     }
@@ -21,7 +25,12 @@ class Round extends Model
     }
 
     public function getNextCriteriaNumberAttribute() {
-        $count = \App\Criteria::where('round_id', $this->id)->count();
+        $count = Criteria::where('round_id', $this->id)->count();
+        return ++$count;
+    }
+
+    public function getNextContestantNumberAttribute() {
+        $count = Contestant::where('round_id', $this->id)->count();
         return ++$count;
     }
 
