@@ -62,4 +62,16 @@ class RoundController extends Controller
 
         return redirect()->back();
     }
+
+    public function commence(Round $round) {
+        $round->contest->status = $round->id;
+        $round->contest->save();
+        return redirect()->back();
+    }
+
+    public function suspend(Round $round) {
+        $round->contest->status = "pending";
+        $round->contest->save();
+        return redirect()->back()->with('Info','The round has been suspended.');
+    }
 }

@@ -5,6 +5,15 @@
 @include('criterias.modal_entry')
 @include('contestants.modal_entry')
 
+@if($round->contest->status == $round->id)
+<span class="float-right" style="width: 500px">
+    <div class="alert alert-info">
+        This contest is now on-going...
+    </div>
+</span>
+
+@endif
+
 <h1>Manage Round</h1>
 <p><a href='{{url("/contest/{$round->contest->id}")}}'>{{$round->contest->title}}</a> | {{$round->name}}</p>
 <hr>
@@ -83,6 +92,28 @@
         </div>
     </div>
 </div>
+
+@if($round->contest->status != $round->id)
+<hr>
+<div class="row">
+    <div class="col-md-3 offset-md-9">
+        <a href='{{url("/round/$round->id/commence")}}' class="btn btn-primary btn-lg float-right">
+            Commence Round
+        </a>
+    </div>
+</div>
+@else
+<hr>
+<div class="row">
+    <div class="col-md-3 offset-md-9">
+        <a href='{{url("/round/$round->id/suspend")}}' class="btn btn-warning btn-lg float-right">
+            Suspend Round
+        </a>
+    </div>
+</div>
+@endif
+
+<br><br>
 @stop
 
 @section('scripts')

@@ -15,9 +15,9 @@
         <tr>
             <td><a href='{{url("/contest/$contest->id")}}' class="nav-link">{{$contest->title}}</a></td>
             <td>{{$contest->schedule}}</td>
-            <td>{{$contest->countJudges}}</td>
-            <td>{{$contest->countContestants}}</td>
-            <td>{{$contest->status}}</td>
+            <td>{{$contest->judgesCount}}</td>
+            <td>{{$contest->rounds->first()->contestants->count()}}</td>
+            <td>{{$contest->statusText}}</td>
         </tr>
         @endforeach
     </tbody>

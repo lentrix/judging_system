@@ -29,4 +29,21 @@ class Contest extends Model
     public function contestJudges() {
         return $this->hasMany('App\ContestJudge')->orderBy('order');
     }
+
+    public function getRoundsCountAttribute() {
+        return Round::where('contest_id', $this->id)->count();
+    }
+
+    public function getJudgesCountAttribute() {
+        return ContestJudge::where('contest_id', $this->id)->count();
+    }
+
+    public function getStatusTextAttribute() {
+        if($this->status != 'pending') {
+            $round = Round::find($this->status);
+            return $round->name;
+        }else {
+            return "pending";
+        }
+    }
 }

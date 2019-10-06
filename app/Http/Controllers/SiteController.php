@@ -28,7 +28,7 @@ class SiteController extends Controller
         if($login) {
             return redirect()->home();
         }else {
-            return redirect()->back();
+            return redirect()->back()->with('Error','Invalid username and/or password.');
         }
     }
 
@@ -39,5 +39,10 @@ class SiteController extends Controller
         }else {
             return view('site.judge-home');
         }
+    }
+
+    public function logout() {
+        auth()->logout();
+        return redirect('/');
     }
 }

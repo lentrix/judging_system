@@ -16,6 +16,7 @@ Route::post('/login', 'SiteController@login');
 
 Route::group(['middleware'=>['auth']], function() {
     Route::get('/home', 'SiteController@home')->name('home');
+    Route::get('/logout', 'SiteController@logout');
 });
 
 Route::group(['middleware'=>['auth','admin']], function(){
@@ -28,6 +29,8 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/round/{round}', 'RoundController@manage');
     Route::get('/round/{round}/up', 'RoundController@moveUp');
     Route::get('/round/{round}/down', 'RoundController@moveDown');
+    Route::get('/round/{round}/commence', 'RoundController@commence');
+    Route::get('/round/{round}/suspend', 'RoundController@suspend');
 
     Route::post('/criteria', 'CriteriaController@store');
     Route::delete('/criteria/{criteria}', 'CriteriaController@delete');
