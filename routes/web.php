@@ -49,3 +49,7 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/contestant/{contestant}/down', 'ContestantController@moveDown');
 });
 
+Route::group(['middleware'=>['auth','judge']], function(){
+    Route::get('/judging/{contest}', 'JudgingController@index');
+    Route::post('/judging/{round}', 'JudgingController@saveScores');
+});

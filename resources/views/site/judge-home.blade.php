@@ -14,7 +14,7 @@
                 <div class="list-group">
                     @foreach(auth()->user()->contestJudges as $cj)
                     <a class="list-group-item list-group-item-action"
-                            href='{{url("/judge/contest/$cj->contest_id")}}'>
+                            href='{{url("/judging/$cj->contest_id")}}'>
                         <strong>{{$cj->contest->title}}</strong><br>
                         <span class="small-italic">
                             {{$cj->contest->schedule}} |

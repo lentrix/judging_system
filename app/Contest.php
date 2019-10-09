@@ -46,4 +46,8 @@ class Contest extends Model
             return "pending";
         }
     }
+
+    public function getCurrentRoundAttribute() {
+        return Round::find($this->status);
+    }
 }
