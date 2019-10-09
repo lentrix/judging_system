@@ -31,6 +31,7 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/round/{round}/down', 'RoundController@moveDown');
     Route::get('/round/{round}/commence', 'RoundController@commence');
     Route::get('/round/{round}/suspend', 'RoundController@suspend');
+    Route::get('/round/{round}/summary', 'RoundController@summary');
 
     Route::post('/criteria', 'CriteriaController@store');
     Route::delete('/criteria/{criteria}', 'CriteriaController@delete');

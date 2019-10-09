@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Round;
+use App\Score;
 
 class RoundController extends Controller
 {
@@ -73,5 +74,36 @@ class RoundController extends Controller
         $round->contest->status = "pending";
         $round->contest->save();
         return redirect()->back()->with('Info','The round has been suspended.');
+    }
+
+    public function summary(Round $round) {
+        $totalsAndRanks = [];
+        $contestJudges = $round->contest->contestJudges;
+
+        foreach($contestJudges as $contestJudge) {
+            $totalsAndRanks[$contestJudge->id] = Score::totalAndRank($round->id, $contestJudge->user_id);
+        }
+
+        $sumsOfRanks = [];
+        $sumsOfRanksSorted = [];
+        foreach($round->contestants as $contestant) {
+            $sum = 0;
+            foreach($contestJudges as $contestJudge) {
+                $sum += $totalsAndRanks[$contestJudge->id][$contestant->name]['rank'];
+
+            }
+            $sumsOfRanks[$contestant->name] = $sum;
+            $sumsOfRanksSorted[]=$sum;
+        }
+
+        sort($sumsOfRanksSorted);
+
+        return view('rounds.summary',[
+            'round' => $round,
+            'contestJudges' => $contestJudges,
+            'totalsAndRanks' => $totalsAndRanks,
+            'sumsOfRanks' => $sumsOfRanks,
+            'sumsOfRanksSorted' => $sumsOfRanksSorted,
+        ]);
     }
 }

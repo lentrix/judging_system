@@ -27,3 +27,7 @@ h1, h2, h3 {
     font-style: italic;
     color: rgb(68, 117, 136);
 }
+
+.center {
+    text-align: center;
+}

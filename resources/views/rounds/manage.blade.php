@@ -9,6 +9,7 @@
 <span class="float-right" style="width: 500px">
     <div class="alert alert-info">
         This contest is now on-going...
+        <a href='{{url("/round/$round->id/summary")}}' class="btn btn-primary float-right">View Summary</a>
     </div>
 </span>
 
