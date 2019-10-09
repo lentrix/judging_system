@@ -17,11 +17,13 @@ class Round extends Model
     }
 
     public function getNextRoundAttribute() {
-        return static::where('round_order', $this->round_order + 1)->first();
+        return static::where('round_order', $this->round_order + 1)
+            ->where('contest_id', $this->contest_id)->first();
     }
 
     public function getPreviousRoundAttribute() {
-        return static::where('round_order', $this->round_order - 1)->first();
+        return static::where('round_order', $this->round_order - 1)
+            ->where('contest_id', $this->contest_id)->first();
     }
 
     public function getNextCriteriaNumberAttribute() {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Round;
 use App\Score;
+use App\Contestant;
 
 class RoundController extends Controller
 {
@@ -96,8 +97,6 @@ class RoundController extends Controller
             $sumsOfRanksSorted[]=$sum;
         }
 
-        sort($sumsOfRanksSorted);
-
         return view('rounds.summary',[
             'round' => $round,
             'contestJudges' => $contestJudges,
@@ -105,5 +104,24 @@ class RoundController extends Controller
             'sumsOfRanks' => $sumsOfRanks,
             'sumsOfRanksSorted' => $sumsOfRanksSorted,
         ]);
+    }
+
+    public function advance(Round $round, Request $request) {
+
+        foreach($request['qualifier'] as $qualifier) {
+            $c = Contestant::find($qualifier);
+            $order = 1;
+            Contestant::create([
+                'name' => $c->name,
+                'details' => $c->details,
+                'order' => $order++,
+                'round_id' => $round->nextRound->id
+            ]);
+        }
+
+        $round->contest->status = $round->nextRound->id;
+        $round->contest->save();
+
+        return redirect("/round/{$round->nextRound->id}");
     }
 }
