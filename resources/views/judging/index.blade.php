@@ -16,14 +16,15 @@
 <h1>{{$contest->title}} | {{$contest->currentRound->name}}</h1>
 <p>Judge: {{auth()->user()->name}}</p>
 <hr>
+
 <form method="post" action='{{url("/judging/{$contest->currentRound->id}")}}'>
     {{csrf_field()}}
 <table class="table table-bordered">
-    <thead>
+    <thead id="table-header" class="static-header">
         <tr>
-            <th>Contestant</th>
+            <th width="14%">Contestant</th>
             @foreach($contest->currentRound->criterias as $crit)
-            <th>
+            <th width="14%">
                 {{$crit->criteria}} ({{$crit->max}})<br>
                 <span class="small-italic">{{$crit->description}}</span>
             </th>
@@ -73,6 +74,15 @@ $(document).ready(function(){
             $(this).val(max);
         }
     })
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+
+        }
+        else {
+            // <= 100px from top - hide div
+        }
+    });
 })
 </script>
 @stop
