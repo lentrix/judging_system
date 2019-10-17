@@ -8,6 +8,10 @@
             {!! Form::open(['url'=>'/contestant', 'method'=>'post']) !!}
             <div class="modal-body">
                 <div class='form-group'>
+                    {{Form::label('order','Contestant Number')}}
+                    {{Form::text('order',null,['class'=>'form-control', 'required'])}}
+                </div>
+                <div class='form-group'>
                     {{Form::label('name')}}
                     {{Form::text('name',null,['class'=>'form-control', 'required'])}}
                 </div>

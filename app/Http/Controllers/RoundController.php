@@ -110,11 +110,10 @@ class RoundController extends Controller
 
         foreach($request['qualifier'] as $qualifier) {
             $c = Contestant::find($qualifier);
-            $order = 1;
             Contestant::create([
                 'name' => $c->name,
                 'details' => $c->details,
-                'order' => $order++,
+                'order' => $c->order,
                 'round_id' => $round->nextRound->id
             ]);
         }
@@ -123,5 +122,17 @@ class RoundController extends Controller
         $round->contest->save();
 
         return redirect("/round/{$round->nextRound->id}");
+    }
+
+    public function reset(Request $request) {
+        $round = Round::find($request['round_id']);
+
+        if(!$round) {
+            return redirect()->back()->with('Error','Invalid Round ID' . $request['round_id']);
+        }
+
+        \App\Score::whereIn('criteria_id', \App\Criteria::where('round_id', $round->id)->pluck('id'))->delete();
+
+        return redirect()->back()->with('Info',"$round->name of {$round->contest->title} has been reset.");
     }
 }

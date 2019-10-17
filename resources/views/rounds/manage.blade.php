@@ -4,6 +4,7 @@
 
 @include('criterias.modal_entry')
 @include('contestants.modal_entry')
+@include('rounds.reset-modal')
 
 @if($round->contest->status == $round->id)
 <span class="float-right" style="width: 500px">
@@ -98,7 +99,12 @@
 @if($round->contest->status != $round->id)
 <hr>
 <div class="row">
-    <div class="col-md-3 offset-md-9">
+    <div class="col-md-2">
+        <button class="btn btn-danger btn-lg btn-block modal-btn" type="button" data-target="resetRoundModal">
+            Hard Reset
+        </button>
+    </div>
+    <div class="col-md-3 offset-md-7">
         <a href='{{url("/round/$round->id/commence")}}' class="btn btn-primary btn-lg float-right">
             Commence Round
         </a>

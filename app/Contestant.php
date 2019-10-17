@@ -19,4 +19,8 @@ class Contestant extends Model
     public function getPreviousContestantAttribute() {
         return static::where('order', $this->order-1)->first();
     }
+
+    public function scores() {
+        return $this->hasMany('App\Score');
+    }
 }

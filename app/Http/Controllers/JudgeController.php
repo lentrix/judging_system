@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ContestJudge;
 use App\Contest;
+use App\User;
 
 class JudgeController extends Controller
 {

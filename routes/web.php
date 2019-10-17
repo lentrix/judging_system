@@ -26,6 +26,7 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/contest/{contest}', 'ContestController@manage');
     Route::post('/round', 'RoundController@store');
 
+    Route::post('/round/reset', 'RoundController@reset');
     Route::get('/round/{round}', 'RoundController@manage');
     Route::get('/round/{round}/up', 'RoundController@moveUp');
     Route::get('/round/{round}/down', 'RoundController@moveDown');

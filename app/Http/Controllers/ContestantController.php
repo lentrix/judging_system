@@ -11,7 +11,8 @@ class ContestantController extends Controller
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            'round_id' => 'required|numeric'
+            'round_id' => 'required|numeric',
+            'order' => 'required|numeric'
         ]);
 
         $round = Round::find($request['round_id']);
@@ -21,15 +22,17 @@ class ContestantController extends Controller
             'details' => $request['details'],
             'remarks' => $request['remarks'],
             'round_id' => $round->id,
-            'order' => $round->nextContestantNumber
+            'order' => $request['order'],
         ]);
 
         return redirect()->back()->with('Info','New contestant added.');
     }
 
     public function delete(Contestant $contestant) {
-        //check first if there are not scores before deleting
-        //to added later
+        //check first if there are no scores before deleting
+        if(count($contestant->scores) > 0){
+            return redirect()->back()->with('Error','Cannot delete contestant because of existing scores.');
+        }
 
         $contestant->delete();
         return redirect()->back();
