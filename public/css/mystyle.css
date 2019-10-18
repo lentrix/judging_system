@@ -32,3 +32,18 @@ h1, h2, h3 {
     text-align: center;
 }
 
+.green-bkg {
+    background-color: #99ffaa;
+}
+
+@media screen {
+    .print-only {
+        display: none;
+    }
+}
+
+@media print {
+    .no-print{
+        display: none;
+    }
+}

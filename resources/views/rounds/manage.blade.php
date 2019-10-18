@@ -74,11 +74,6 @@
                     @foreach($round->contestants as $contestant)
 
                     <li class="list-group-item">
-                        <strong>{{$contestant->order}}. {{$contestant->name}}</strong>
-                        @if($contestant->details)
-                            <br><span class="small-italic">{{$contestant->details}}</span>
-                        @endif
-                        <hr>
                         <span class="float-right">
                             {{Form::open(['url'=>"/contestant/$contestant->id",'method'=>'delete','style'=>'display:inline'])}}
                                 <button class="btn btn-danger btn-sm" title="Delete contestant">X</button>
@@ -86,6 +81,11 @@
                             <a href='{{url("/contestant/$contestant->id/up")}}' class="btn btn-success btn-sm">&lt;</a>
                             <a href='{{url("/contestant/$contestant->id/down")}}' class="btn btn-success btn-sm">&gt;</a>
                         </span>
+                        <strong>{{$contestant->order}}. {{$contestant->name}}</strong>
+                        @if($contestant->details)
+                            <br><span class="small-italic">{{$contestant->details}}</span>
+                        @endif
+
                     </li>
 
                     @endforeach
