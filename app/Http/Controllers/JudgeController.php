@@ -53,9 +53,11 @@ class JudgeController extends Controller
         return redirect()->back()->with('Error','Contest judge already exists.');
     }
 
-    public function delete(ContestJudge $contestJudge) {
+    public function delete(Request $request) {
         //check if there are no scores made..
         //to be done later
+
+        $contestJudge = ContestJudge::find($request['id'])->first();
 
         $contestJudge->delete();
 
@@ -84,5 +86,26 @@ class JudgeController extends Controller
             $contestJudge->save();
         }
         return redirect()->back();
+    }
+
+    public function edit(ContestJudge $contestJudge) {
+        return view('judges.edit', compact('contestJudge'));
+    }
+
+    public function update(ContestJudge $contestJudge, Request $request) {
+        $this->validate($request, [
+            'name' => 'required',
+            'username' => 'required',
+        ]);
+
+        $password = $request['password']=='' ? $contestJudge->user->password : bcrypt($request['password']);
+
+        $contestJudge->user->update([
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'password' => $password
+        ]);
+
+        return redirect("/contest/$contestJudge->contest_id")->with('Info','Judge has been updated.');
     }
 }

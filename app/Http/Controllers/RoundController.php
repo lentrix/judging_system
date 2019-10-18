@@ -135,4 +135,15 @@ class RoundController extends Controller
 
         return redirect()->back()->with('Info',"$round->name of {$round->contest->title} has been reset.");
     }
+
+    public function delete(Request $request) {
+        $round = Round::find($request['id'])->first();
+
+        if(count($round->contestants)==0 && count($round->criterias)==0) {
+            $round->delete();
+            return redirect()->back()->with('Info','The round has been deleted.');
+        }else {
+            return redirect()->back()->with('Error','The round still contains contestants or criterias. Unable to delete.');
+        }
+    }
 }

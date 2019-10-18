@@ -6,6 +6,10 @@
 
 @include('judges.modal_entry')
 
+@include('judges.modal_confirm_delete')
+
+@include('rounds.modal_confirm_delete')
+
 <h1>{{$contest->title}}</h1>
 <div class="float-right">Current Status: {{$contest->status}}</div>
 <p>{{$contest->schedule}} | {{$contest->venue}}</p>
@@ -28,9 +32,12 @@
                         <span class="small-italic">{{$round->description}}</span>
                         <hr>
                         <div class="float-right">
-                            <a href='{{url("/round/$round->id")}}' class="btn btn-sm btn-info" title="Manage Round">^</a>
+                            <button class="btn btn-danger btn-sm delete-round-btn"
+                                    data-target="{{$round->id}}"
+                                    data-name="{{$round->name}}">X</button>
                             <a href='{{url("/round/$round->id/up")}}' class="btn btn-success btn-sm" title="Move Up">&lt;</a>
                             <a href='{{url("/round/$round->id/down")}}' class="btn btn-success btn-sm" title="Move Down">&gt;</a>
+                            <a href='{{url("/round/$round->id")}}' class="btn btn-sm btn-info" title="Manage Round">^</a>
                         </div>
                     </li>
                     @endforeach
@@ -55,13 +62,14 @@
                         <strong>{{$contestJudge->order}}. {{$contestJudge->user->name}}</strong> <br>
                         <hr>
                         <div class="float-right">
-                            {{Form::open(['url'=>"/judge/$contestJudge->id", 'method'=>'delete','style'=>'display: inline'])}}
-                                <button class="btn btn-danger btn-sm">X</button>
-                            {{Form::close()}}
+                            <button class="btn btn-danger btn-sm delete-btn"
+                                    data-target="{{$contestJudge->id}}"
+                                    data-name="{{$contestJudge->user->name}}">X</button>
                             <a href='{{url("/judge/$contestJudge->id/up")}}'
                                 class="btn btn-success btn-sm">&lt;</a>
                             <a href='{{url("/judge/$contestJudge->id/down")}}'
                                 class="btn btn-success btn-sm">&gt;</a>
+                            <a href='{{url("/judge/$contestJudge->id/edit")}}' class="btn btn-info btn-sm" title="Edit Judge">E</a>
                         </div>
                     </li>
                     @endforeach
@@ -82,6 +90,27 @@ $(document).ready(function(){
         var target = $(this).attr('data-target');
         $("#" + target).modal('show');
     })
+
+    $('.delete-btn').click(function() {
+        var targetID = $(this).attr('data-target');
+        var judgeName = $(this).attr('data-name');
+        console.log(judgeName);
+        $("#judge_name").text(judgeName);
+        $("#contest_judge_id").val(targetID);
+        $("#deleteJudgeModal").modal('show');
+    })
+
+    $('.delete-round-btn').click(function(){
+        var roundID = $(this).attr('data-target');
+        var roundName = $(this).attr('data-name');
+        console.log(roundID, roundName);
+
+        $("#round_id").val(roundID);
+        $("#round_name").text(roundName);
+        $("#deleteRoundModal").modal('show');
+
+    })
+
 })
 </script>
 

@@ -25,6 +25,7 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::post('/contest', 'ContestController@store');
     Route::get('/contest/{contest}', 'ContestController@manage');
     Route::post('/round', 'RoundController@store');
+    Route::delete('/round', 'RoundController@delete');
 
     Route::post('/round/reset', 'RoundController@reset');
     Route::get('/round/{round}', 'RoundController@manage');
@@ -42,7 +43,9 @@ Route::group(['middleware'=>['auth','admin']], function(){
 
     Route::post('/judge', 'JudgeController@store');
     Route::patch('/judge', 'JudgeController@addExisting');
-    Route::delete('/judge/{contestJudge}', 'JudgeController@delete');
+    Route::get('/judge/{contestJudge}/edit', 'JudgeController@edit');
+    Route::patch('/judge/{contestJudge}', 'JudgeController@update');
+    Route::delete('/judge', 'JudgeController@delete');
     Route::get('/judge/{contestJudge}/up', 'JudgeController@moveUp');
     Route::get('/judge/{contestJudge}/down', 'JudgeController@moveDown');
 
