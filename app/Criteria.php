@@ -15,4 +15,8 @@ class Criteria extends Model
     public function getPreviousCriteriaAttribute() {
         return static::where('order', $this->order - 1)->first();
     }
+
+    public function round() {
+        return $this->belongsTo('App\Round');
+    }
 }

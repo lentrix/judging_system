@@ -35,11 +35,13 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/round/{round}/suspend', 'RoundController@suspend');
     Route::get('/round/{round}/summary', 'RoundController@summary');
     Route::post('/round/{round}/advance', 'RoundController@advance');
+    Route::post('/round/{round}/close', 'RoundController@close');
 
     Route::post('/criteria', 'CriteriaController@store');
-    Route::delete('/criteria/{criteria}', 'CriteriaController@delete');
+    Route::delete('/criteria', 'CriteriaController@delete');
     Route::get('/criteria/{criteria}/up', 'CriteriaController@moveUp');
     Route::get('/criteria/{criteria}/down', 'CriteriaController@moveDown');
+    Route::get('/criteria/{criteria}/summary', 'CriteriaController@summary');
 
     Route::post('/judge', 'JudgeController@store');
     Route::patch('/judge', 'JudgeController@addExisting');
@@ -50,9 +52,10 @@ Route::group(['middleware'=>['auth','admin']], function(){
     Route::get('/judge/{contestJudge}/down', 'JudgeController@moveDown');
 
     Route::post('/contestant','ContestantController@store');
-    Route::delete('contestant/{contestant}', 'ContestantController@delete');
+    Route::delete('/contestant','ContestantController@delete');
     Route::get('/contestant/{contestant}/up', 'ContestantController@moveUp');
     Route::get('/contestant/{contestant}/down', 'ContestantController@moveDown');
+
 });
 
 Route::group(['middleware'=>['auth','judge']], function(){

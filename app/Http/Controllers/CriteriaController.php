@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Criteria;
+use App\Score;
 
 class CriteriaController extends Controller
 {
@@ -27,8 +28,11 @@ class CriteriaController extends Controller
         return redirect()->back()->with('Info', 'A criteria has been added.');
     }
 
-    public function delete(Criteria $criteria) {
+    public function delete(Request $request) {
+
+        $criteria = Criteria::find($request['id']);
         $criteria->delete();
+
         return redirect()->back()->with('Info','A criteria has been deleted.');
     }
 
@@ -60,5 +64,26 @@ class CriteriaController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function summary(Criteria $criteria) {
+        $computation = [];
+        $totals = [];
+
+        foreach($criteria->round->contestants as $contestant) {
+            $total = 0;
+            foreach($criteria->round->contest->contestJudges as $contestJudge) {
+                $score = Score::get($contestJudge->user_id, $contestant->id, $criteria->id);
+                $total += $score;
+                $computation[$contestant->id][$contestJudge->user_id] = $score;
+            }
+            $computation[$contestant->id]['total'] = $total;
+            $totals[] = $total;
+        }
+
+        return view('criterias.summary', [
+            'criteria'=>$criteria,
+            'computation'=>$computation,
+            'totals' => $totals]);
     }
 }

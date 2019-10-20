@@ -71,8 +71,8 @@ class Score extends Model
         return $totalAndRank;
     }
 
-    public static function getRank($score, Array $scores, $highestToLowes=true) {
-        if($highestToLowes)
+    public static function getRank($score, Array $scores, $highestToLowest=true) {
+        if($highestToLowest)
             rsort($scores);
         else
             sort($scores);

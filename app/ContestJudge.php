@@ -23,4 +23,8 @@ class ContestJudge extends Model
     public function getPreviousJudgeAttribute() {
         return static::where('order', $this->order - 1)->first();
     }
+
+    public function scores() {
+        return $this->hasMany('App\Score');
+    }
 }

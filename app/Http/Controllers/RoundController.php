@@ -146,4 +146,6 @@ class RoundController extends Controller
             return redirect()->back()->with('Error','The round still contains contestants or criterias. Unable to delete.');
         }
     }
+
+
 }

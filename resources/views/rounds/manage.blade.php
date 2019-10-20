@@ -5,6 +5,8 @@
 @include('criterias.modal_entry')
 @include('contestants.modal_entry')
 @include('rounds.reset-modal')
+@include('criterias.modal_confirm_delete')
+@include('contestants.modal_confirm_delete')
 
 @if($round->contest->status == $round->id)
 <span class="float-right" style="width: 500px">
@@ -42,11 +44,12 @@
                         <span class="small-italic">{{$criteria->description}}</span>
                         <hr>
                         <span class="float-right">
-                            {!! Form::open(['url'=>"/criteria/$criteria->id", 'method'=>'delete','style'=>'display: inline']) !!}
-                                <button class="btn btn-danger btn-sm">X</button>
-                            {!! Form::close() !!}
+                            <button class="btn btn-danger btn-sm delete-criteria-btn"
+                                    data-target="{{$criteria->id}}"
+                                    data-name="{{$criteria->criteria}}">X</button>
                             <a href='{{url("/criteria/$criteria->id/up")}}' class="btn btn-success btn-sm">&lt;</a>
                             <a href='{{url("/criteria/$criteria->id/down")}}' class="btn btn-success btn-sm">&gt;</a>
+                            <a href='{{url("/criteria/$criteria->id/summary")}}' class="btn btn-info btn-sm" title="Criteria Summary">^</a>
                         </span>
                     </li>
                     @endforeach
@@ -75,9 +78,9 @@
 
                     <li class="list-group-item">
                         <span class="float-right">
-                            {{Form::open(['url'=>"/contestant/$contestant->id",'method'=>'delete','style'=>'display:inline'])}}
-                                <button class="btn btn-danger btn-sm" title="Delete contestant">X</button>
-                            {{Form::close()}}
+                            <button class="btn btn-danger btn-sm delete-contestant-btn"
+                                    data-target="{{$contestant->id}}"
+                                    data-name="{{$contestant->name}}">X</button>
                             <a href='{{url("/contestant/$contestant->id/up")}}' class="btn btn-success btn-sm">&lt;</a>
                             <a href='{{url("/contestant/$contestant->id/down")}}' class="btn btn-success btn-sm">&gt;</a>
                         </span>
@@ -131,6 +134,25 @@ $(document).ready(function(){
     $(".modal-btn").click(function(){
         var target = $(this).attr('data-target');
         $("#" + target).modal('show');
+    })
+
+    $(".delete-criteria-btn").click(function(){
+        var criteriaID = $(this).attr('data-target');
+        var criteriaName = $(this).attr('data-name');
+
+        $("#confirmDeleteCriteriaModal").modal('show');
+        $("#criteria_id").val(criteriaID);
+        $("#criteria_name").text(criteriaName);
+        console.log(criteriaName);
+    })
+
+    $(".delete-contestant-btn").click(function() {
+        var contestantID = $(this).attr('data-target');
+        var contestantName = $(this).attr('data-name');
+
+        $("#confirmDeleteContestantModal").modal('show');
+        $("#contestant_id").val(contestantID);
+        $("#contestant_name").text(contestantName);
     })
 })
 </script>

@@ -28,7 +28,10 @@ class ContestantController extends Controller
         return redirect()->back()->with('Info','New contestant added.');
     }
 
-    public function delete(Contestant $contestant) {
+    public function delete(Request $request) {
+
+        $contestant = Contestant::find($request['id']);
+
         //check first if there are no scores before deleting
         if(count($contestant->scores) > 0){
             return redirect()->back()->with('Error','Cannot delete contestant because of existing scores.');

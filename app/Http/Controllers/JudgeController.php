@@ -57,11 +57,15 @@ class JudgeController extends Controller
         //check if there are no scores made..
         //to be done later
 
-        $contestJudge = ContestJudge::find($request['id'])->first();
+        $contestJudge = ContestJudge::find($request['id']);
+
+        if(count($contestJudge->scores)>0) {
+            return redirect()->back()->with('Error','This judge has already submitted scores. Unable to delete.');
+        }
 
         $contestJudge->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('Info','Judge has been deleted.');
     }
 
     public function moveUp(ContestJudge $contestJudge) {
