@@ -7,6 +7,7 @@
 @include('rounds.reset-modal')
 @include('criterias.modal_confirm_delete')
 @include('contestants.modal_confirm_delete')
+@include('contestants.modal_batch_entry')
 
 @if($round->contest->status == $round->id)
 <span class="float-right" style="width: 500px">
@@ -69,7 +70,8 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                    <button class="btn btn-primary float-right modal-btn" data-target="addContestantModal">+</button>
+                <button class="btn btn-primary float-right modal-btn" data-target="addContestantModal">+</button>
+                <button class="btn btn-primary float-right modal-btn" data-target="batchAddContestantModal">*</button>
                 <h3>Contestants</h3>
             </div>
             <div class="card-body">

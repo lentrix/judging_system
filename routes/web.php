@@ -53,6 +53,7 @@ Route::group(['middleware'=>['auth','admin']], function(){
 
     Route::post('/contestant','ContestantController@store');
     Route::delete('/contestant','ContestantController@delete');
+    Route::post('/contestant/batch','ContestantController@addBatch');
     Route::get('/contestant/{contestant}/up', 'ContestantController@moveUp');
     Route::get('/contestant/{contestant}/down', 'ContestantController@moveDown');
 

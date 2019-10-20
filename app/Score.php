@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Score extends Model
 {
-    protected $fillable = ['user_id','criteria_id','contestant_id','score'];
+    protected $fillable = ['contest_judge_id','criteria_id','contestant_id','score'];
 
     public function user() {
         return $this->belongsTo('App\User');
@@ -20,8 +20,8 @@ class Score extends Model
         return $this->belongsTo('App\Criteria');
     }
 
-    public static function createOrUpdate($user_id, $cont_id, $crit_id, $scoreValue) {
-        $score = static::where('user_id', $user_id)
+    public static function createOrUpdate($contest_judge_id, $cont_id, $crit_id, $scoreValue) {
+        $score = static::where('contest_judge_id', $contest_judge_id)
                 ->where('contestant_id', $cont_id)
                 ->where('criteria_id', $crit_id)->first();
 
@@ -31,7 +31,7 @@ class Score extends Model
             ]);
         }else {
             Score::create([
-                'user_id' => $user_id,
+                'contest_judge_id' => $contest_judge_id,
                 'contestant_id' => $cont_id,
                 'criteria_id' => $crit_id,
                 'score' => $scoreValue
@@ -39,16 +39,16 @@ class Score extends Model
         }
     }
 
-    public static function get($user_id, $contestant_id, $criteria_id) {
-        $score = static::where('user_id', $user_id)
+    public static function get($contest_judge_id, $contestant_id, $criteria_id) {
+        $score = static::where('contest_judge_id', $contest_judge_id)
                     ->where('contestant_id', $contestant_id)
                     ->where('criteria_id', $criteria_id)->first();
         $theScore = $score ? $score->score : 0;
         return $theScore;
     }
 
-    public static function contestantJudgeTotal($contestant_id, $user_id) {
-        $scores = static::where('user_id', $user_id)->where('contestant_id', $contestant_id)->get();
+    public static function contestantJudgeTotal($contestant_id, $contest_judge_id) {
+        $scores = static::where('contest_judge_id', $contest_judge_id)->where('contestant_id', $contestant_id)->get();
         $sum = 0;
         foreach($scores as $score) {
             $sum += $score->score;
@@ -56,12 +56,12 @@ class Score extends Model
         return $sum;
     }
 
-    public static function totalAndRank($round_id, $user_id) {
+    public static function totalAndRank($round_id, $contest_judge_id) {
         $round = Round::find($round_id);
         $totals = [];
         $totalAndRank= [];
         foreach($round->contestants as $contestant) {
-            $totals[$contestant->name] = Score::contestantJudgeTotal($contestant->id, $user_id);
+            $totals[$contestant->name] = Score::contestantJudgeTotal($contestant->id, $contest_judge_id);
         }
 
         foreach($totals as $contestant=>$total) {

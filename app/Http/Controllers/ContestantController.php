@@ -64,4 +64,18 @@ class ContestantController extends Controller
         }
         return redirect()->back();
     }
+
+    public function addBatch(Request $request) {
+
+        for($i=1; $i<=$request['number']; $i++) {
+            Contestant::create([
+                'name' => $request['name'] . $i,
+                'details' => $request['name'] . $i,
+                'round_id' => $request['round_id'],
+                'order' => $i,
+            ]);
+        }
+
+        return redirect()->back()->with('Info',"{$request['number']} contestants were added.");
+    }
 }

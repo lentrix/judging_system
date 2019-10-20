@@ -19,6 +19,7 @@
 
 <form method="post" action='{{url("/judging/{$contest->currentRound->id}")}}'>
     {{csrf_field()}}
+    <input type="hidden" name="contest_id" value="{{$contest->id}}">
 <table class="table table-bordered table-striped">
     <tbody>
         @foreach($contest->currentRound->contestants as $cont)
@@ -35,7 +36,7 @@
                         class="form-control score-entry"
                         data-max="{{$crit2->max}}"
                         title ="Max: {{$crit2->max}}"
-                        value="{{\App\Score::get(auth()->user()->id, $cont->id, $crit2->id)}}">
+                        value="{{\App\Score::get($contestJudge->id, $cont->id, $crit2->id)}}">
             </td>
             @endforeach
             <td style="vertical-align: bottom">
@@ -90,6 +91,11 @@ $(document).ready(function(){
             alert("The score cannot be negative");
             $(this).val(0);
         }
+    })
+
+    $('.score-entry').focus(function(){
+        var ln = $(this).val().length;
+        $(this)[0].setSelectionRange(0,ln);
     })
 })
 </script>

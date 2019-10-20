@@ -82,7 +82,7 @@ class RoundController extends Controller
         $contestJudges = $round->contest->contestJudges;
 
         foreach($contestJudges as $contestJudge) {
-            $totalsAndRanks[$contestJudge->id] = Score::totalAndRank($round->id, $contestJudge->user_id);
+            $totalsAndRanks[$contestJudge->id] = Score::totalAndRank($round->id, $contestJudge->id);
         }
 
         $sumsOfRanks = [];
